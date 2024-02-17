@@ -15,15 +15,15 @@ void AddDot( int k, float *x, int incx,  float *y, float *gamma )
   /* compute gamma := x' * y + gamma with vectors x and y of length n.
      Here x starts at location x with increment (stride) incx and y starts at location y and has (implicit) stride of 1.
   */
- 
+
   int p;
 
   for ( p=0; p<k; p++ ){
-    *gamma += x[p] * Y(p);     
+    *gamma += x[p] * Y(p);
   }
 }
 
-void MY_MMult2( int m, int n, int k, float *a, int lda, 
+void MY_MMult2( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )
 {
