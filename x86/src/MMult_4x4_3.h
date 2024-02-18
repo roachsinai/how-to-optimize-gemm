@@ -14,11 +14,11 @@ void AddDot( int k, float *x, int incx,  float *y, float *gamma )
   /* compute gamma := x' * y + gamma with vectors x and y of length n.
      Here x starts at location x with increment (stride) incx and y starts at location y and has (implicit) stride of 1.
   */
- 
+
   int p;
 
   for ( p=0; p<k; p++ ){
-    *gamma += x[p] * Y(p);     
+    *gamma += x[p] * Y(p);
   }
 }
 
@@ -27,18 +27,18 @@ void AddDot( int k, float *x, int incx,  float *y, float *gamma )
 void AddDot4x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc )
 {
   /* So, this routine computes a 4x4 block of matrix A
-           C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ).  
-           C( 1, 0 ), C( 1, 1 ), C( 1, 2 ), C( 1, 3 ).  
-           C( 2, 0 ), C( 2, 1 ), C( 2, 2 ), C( 2, 3 ).  
-           C( 3, 0 ), C( 3, 1 ), C( 3, 2 ), C( 3, 3 ).  
+           C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ).
+           C( 1, 0 ), C( 1, 1 ), C( 1, 2 ), C( 1, 3 ).
+           C( 2, 0 ), C( 2, 1 ), C( 2, 2 ), C( 2, 3 ).
+           C( 3, 0 ), C( 3, 1 ), C( 3, 2 ), C( 3, 3 ).
      Notice that this routine is called with c = C( i, j ) in the
-     previous routine, so these are actually the elements 
-           C( i  , j ), C( i  , j+1 ), C( i  , j+2 ), C( i  , j+3 ) 
-           C( i+1, j ), C( i+1, j+1 ), C( i+1, j+2 ), C( i+1, j+3 ) 
-           C( i+2, j ), C( i+2, j+1 ), C( i+2, j+2 ), C( i+2, j+3 ) 
-           C( i+3, j ), C( i+3, j+1 ), C( i+3, j+2 ), C( i+3, j+3 ) 
-	  
-     in the original matrix C */ 
+     previous routine, so these are actually the elements
+           C( i  , j ), C( i  , j+1 ), C( i  , j+2 ), C( i  , j+3 )
+           C( i+1, j ), C( i+1, j+1 ), C( i+1, j+2 ), C( i+1, j+3 )
+           C( i+2, j ), C( i+2, j+1 ), C( i+2, j+2 ), C( i+2, j+3 )
+           C( i+3, j ), C( i+3, j+1 ), C( i+3, j+2 ), C( i+3, j+3 )
+
+     in the original matrix C */
 
   /* First row */
   AddDot( k, &A( 0, 0 ), lda, &B( 0, 0 ), &C( 0, 0 ) );
@@ -65,7 +65,7 @@ void AddDot4x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   AddDot( k, &A( 3, 0 ), lda, &B( 0, 3 ), &C( 3, 3 ) );
 }
 
-void MY_MMult_4x4_3( int m, int n, int k, float *a, int lda, 
+void MY_MMult_4x4_3( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )
 {

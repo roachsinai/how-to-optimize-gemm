@@ -60,7 +60,7 @@ float compare_matrices( int m, int n, float *a, int lda, float *b, int ldb )
   for (int i=0; i<m; i++ ){
     for (int j=0; j<n; j++ ){
         diff = abs(A(i, j) - B(i, j));
-        
+
         max_diff = max(diff, max_diff);
 
         if(max_diff > 0.5f || max_diff < -0.5f) {
@@ -80,7 +80,7 @@ int m, n, k, lda, ldb, ldc;
 
 double time_tmp, time_best, gflops, diff;
 
-float *a, *b, *c, *prec, *nowc;    
+float *a, *b, *c, *prec, *nowc;
 
 int main(){
 
@@ -115,7 +115,7 @@ int main(){
 
         // 循环20次，以最快的运行时间为结果
         for(int j=0; j < 20; j++){
-            
+
             copy_matrix(m, n, prec, ldc, c, ldc);
 
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
@@ -125,7 +125,7 @@ int main(){
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
             time_tmp = get_time(&start, &end);
-            
+
             if(j == 0)
                 time_best = time_tmp;
             else

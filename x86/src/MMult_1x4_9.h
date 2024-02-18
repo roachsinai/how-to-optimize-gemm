@@ -8,36 +8,36 @@
 
 void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc )
 {
-  /* So, this routine computes four elements of C: 
-           C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ).  
+  /* So, this routine computes four elements of C:
+           C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ).
      Notice that this routine is called with c = C( i, j ) in the
-     previous routine, so these are actually the elements 
-           C( i, j ), C( i, j+1 ), C( i, j+2 ), C( i, j+3 ) 
-	  
+     previous routine, so these are actually the elements
+           C( i, j ), C( i, j+1 ), C( i, j+2 ), C( i, j+3 )
+
      in the original matrix C.
      We now unroll the loop */
 
   int p;
-  register float 
+  register float
     /* hold contributions to
        C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ) */
-       c_00_reg,   c_01_reg,   c_02_reg,   c_03_reg,  
+       c_00_reg,   c_01_reg,   c_02_reg,   c_03_reg,
     /* holds A( 0, p ) */
        b_0p_reg;
-  float 
+  float
     /* Point to the current elements in the four columns of B */
-    *ap0_pntr, *ap1_pntr, *ap2_pntr, *ap3_pntr; 
-    
+    *ap0_pntr, *ap1_pntr, *ap2_pntr, *ap3_pntr;
+
   ap0_pntr = &A( 0, 0 );
   ap1_pntr = &A( 1, 0 );
   ap2_pntr = &A( 2, 0 );
   ap3_pntr = &A( 3, 0 );
 
-  c_00_reg = 0.0; 
-  c_01_reg = 0.0; 
-  c_02_reg = 0.0; 
+  c_00_reg = 0.0;
+  c_01_reg = 0.0;
+  c_02_reg = 0.0;
   c_03_reg = 0.0;
- 
+
   for ( p=0; p<k; p+=4 ){
     b_0p_reg = B( p, 0 );
 
@@ -73,13 +73,13 @@ void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
     ap3_pntr += 4;
   }
 
-  C( 0, 0 ) += c_00_reg; 
-  C( 1, 0 ) += c_01_reg; 
-  C( 2, 0 ) += c_02_reg; 
+  C( 0, 0 ) += c_00_reg;
+  C( 1, 0 ) += c_01_reg;
+  C( 2, 0 ) += c_02_reg;
   C( 3, 0 ) += c_03_reg;
 }
 
-void MY_MMult_1x4_9( int m, int n, int k, float *a, int lda, 
+void MY_MMult_1x4_9( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )
 {
