@@ -17,10 +17,10 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
 
 #if USE_OMP
     #pragma omp parallel for num_threads(OMP_THREAD)
-#endif 
+#endif
         for(int cc = 0; cc < ccOutChannel; cc++){
             int c = cc << 2;
-            
+
             float *dest0 = dest + c * out_size;
             float *dest1 = dest + (c + 1) * out_size;
             float *dest2 = dest + (c + 2) * out_size;
@@ -59,7 +59,7 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
 #else
                 int remain = out_size;
 #endif
-                
+
 #if USE_NEON
 #if __aarch64__
                 throw Exception(1, "Error: armv8 temporarily not supported!", __FILE__, __LINE__, __FUNCTION__);
@@ -106,7 +106,7 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
                         "vmla.f32   q14, q6, %e21[0]        \n"
                         // float sum3_next = *r0 * kernel3[0]
                         "vmla.f32   q15, q7, %e21[0]        \n"
-                        
+
                         // const float *r1 = src1;
                         "pld        [%6, #256]              \n"
                         "vld1.f32   {d8-d11}, [%6]!         \n"
@@ -315,7 +315,7 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
                         "vmla.f32   q14, q6, %q15           \n"
                         // float sum3_next = *r0 * kernel3[0]
                         "vmla.f32   q15, q7, %q15           \n"
-                        
+
                         // *destptr0 += sum0;
                         "vst1.f32   {d16-d19}, [%1]!        \n"
                         // *destptr1 += sum1;
@@ -373,7 +373,7 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
 
 #if USE_OMP
     #pragma omp parallel for num_threads(OMP_THREAD)
-#endif 
+#endif
         for(int cc = ccRemainOutChannel; cc < outChannel; cc++){
             float *dest0 = dest + cc * out_size;
 
@@ -429,16 +429,16 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
                         "vmla.f32   q0, q2, %q13        \n"
 
                         "vmla.f32   q1, q3, %q13        \n"
-                        
+
                         "pld        [%4, #256]          \n"
                         "vld1.f32   {d4-d7}, [%4]!      \n"
-                        
+
                         "vmla.f32   q0, q2, %q14        \n"
                         "vmla.f32   q1, q3, %q14        \n"
-                        
+
                         "pld        [%5, #256]          \n"
                         "vld1.f32   {d4-d7}, [%5]!      \n"
-                        
+
                         "vmla.f32   q0, q2, %q15        \n"
                         "vmla.f32   q1, q3, %q15        \n"
 
@@ -508,7 +508,7 @@ void conv1x1s1(float *const &src, const int &inWidth, const int &inHeight,  cons
                     "vld1.f32   {d4-d7}, [%2]!      \n"
                     "pld        [%1, #256]          \n"
                     "vld1.f32   {d0-d3}, [%1]       \n"
-                    
+
                     "vmla.f32   q0, q2, %q6         \n"
                     "vmla.f32   q1, q3, %q6         \n"
 
@@ -586,7 +586,7 @@ void conv1x1s1SgemmTransformKenel(float *const &kernel, float* &dest, const int 
         }
 }
 
-void conv1x1s1SgemmTransformInput(float *const &src, const int &inWidth, const int &inHeight,  const int &inChannel, float* &src_tm, 
+void conv1x1s1SgemmTransformInput(float *const &src, const int &inWidth, const int &inHeight,  const int &inChannel, float* &src_tm,
                             const int &outWidth, const int &outHeight, const int &outChannel){
     int inSize = inHeight * inWidth;
     int outSize = outHeight * outWidth;
@@ -716,7 +716,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     "vdup.f32   q11, d0[0]          \n"
 
                     // r4 = nn = inChannel >> 2
-                    "lsr        r4, %12, #2         \n" 
+                    "lsr        r4, %12, #2         \n"
                     "cmp        r4, #0              \n"
                     "beq        1f                  \n"
 
@@ -754,7 +754,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     "1:                             \n"
 
                     // r4 = remain = inChannel & 3;
-                    "and        r4, %12, #3         \n" 
+                    "and        r4, %12, #3         \n"
                     "cmp        r4, #0              \n"
                     "beq        3f                  \n"
 
@@ -889,7 +889,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     "vdup.f32   q11, d0[0]          \n"
 
                     // r4 = nn = inChannel >> 2
-                    "lsr        r4, %12, #2         \n" 
+                    "lsr        r4, %12, #2         \n"
                     "cmp        r4, #0              \n"
                     "beq        1f                  \n"
 
@@ -913,7 +913,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     // sum1 = q9 = [a2, b2, c2, d2]
                     // sum3 = q10 = [a3, b3, c3, d3]
                     // sum4 = q11 = [a4, b4, c4, d4]
-                    
+
                     // q8 = [a1+b1,c1+d1, a2+b2, c2+d2]
                     "vadd.f32   q8, q8, q9          \n"
                     // q10 = [a3+b3, c3+d3, a4+b4, c4+d4]
@@ -924,7 +924,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     "1:                             \n"
 
                     // r4 = remain = inChannel & 3;
-                    "and        r4, %12, #3         \n" 
+                    "and        r4, %12, #3         \n"
                     "cmp        r4, #0              \n"
                     "beq        3f                  \n"
 
@@ -999,19 +999,19 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
 
 #if USE_OMP
     #pragma omp parallel for num_threads(OMP_THREAD)
-#endif    
+#endif
 
         for(int cc = remainOutChannel; cc < outChannel; cc++){
             int c = cc;
             float *destptr0 = dest + c * outSize;
 
             int i = 0;
-            
+
             for(; i + 3 < outSize; i += 4){
                 const float *src_tm_ptr = src_tm + (i / 4) * src_tm_size;
 
                 const float *kernel0 = kernel + (c / 4 + c % 4) *  kernelSize;
-            
+
 #if USE_NEON
 
 #if __aarch64__
@@ -1022,7 +1022,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                     "veor       q9, q9, q9          \n"
 
                     // r4 = nn = inChannel >> 2
-                    "lsr        r4, %6, #2          \n" 
+                    "lsr        r4, %6, #2          \n"
                     "cmp        r4, #0              \n"
                     "beq        1f                  \n"
 
@@ -1115,7 +1115,7 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
                 throw Exception(1, "Error: armv8 temporarily not supported!", __FILE__, __LINE__, __FUNCTION__);
 #else
                 asm volatile(
-                    
+
                 );
 #endif
 
@@ -1124,10 +1124,10 @@ void conv1x1s1SgemmNeon(float *const &src, float *const &src_tm ,const int &inWi
 
                 for(int q = 0; q < inChannel; q++){
                     sum0 += src_tm_ptr[0] * kernel0[0];
-                    
+
                     src_tm_ptr++;
                     kernel0++;
-                }   
+                }
 
                 destptr0[0] = sum0;
 
