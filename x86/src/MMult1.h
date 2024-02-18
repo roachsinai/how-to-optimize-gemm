@@ -19,7 +19,8 @@ void AddDot( int k, float *x, int incx,  float *y, float *gamma )
   int p;
 
   for ( p=0; p<k; p++ ){
-    *gamma += x[p] * Y(p);  // Y 的空间局部性不好
+    // 如果 y 是列主序存储，则 Y 的空间局部性不好
+    *gamma += x[p] * Y(p);
   }
 }
 

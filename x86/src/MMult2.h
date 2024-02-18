@@ -23,6 +23,9 @@ void AddDot( int k, float *x, int incx,  float *y, float *gamma )
   }
 }
 
+// 相对于 MY_MMult1，虽然 MY_MMult2 的想法是一次计算结果矩阵的 4 个元素
+// 但是由于 AddDot 是完整的计算了两个向量的结果之后才结束
+// 导致 MY_MMult2 中矩阵 B 的空间局部性其实和 MY_MMult1 是一样的
 void MY_MMult2( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )
