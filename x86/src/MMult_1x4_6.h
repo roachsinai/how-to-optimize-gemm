@@ -18,6 +18,7 @@ void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
      In this version, we accumulate in registers and put A( 0, p ) in a register */
 
   int p;
+  // c++17 register 已经被弃用，编译器比你更知道什么时候使用寄存器
   register float
     /* hold contributions to
        C( 0, 0 ), C( 0, 1 ), C( 0, 2 ), C( 0, 3 ) */

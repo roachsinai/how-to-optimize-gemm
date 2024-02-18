@@ -79,6 +79,8 @@ void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   C( 3, 0 ) += c_03_reg;
 }
 
+// 和 1x4_8 一样，不过不使用 ++，而是使用 +1, +2
+// 减少了写入 ap0_pntr 的次数
 void MY_MMult_1x4_9( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )

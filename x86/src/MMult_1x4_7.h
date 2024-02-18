@@ -53,6 +53,8 @@ void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   C( 3, 0 ) += c_03_reg;
 }
 
+// 这里 i += 4，表示为 4 行乘 1 列去计算
+// 因为这里矩阵都是行主序，要在 AddDot1x4 中使用 ++ 只能对矩阵 A 使用
 void MY_MMult_1x4_7( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )

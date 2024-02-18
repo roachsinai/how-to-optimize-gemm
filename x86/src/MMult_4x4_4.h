@@ -98,6 +98,7 @@ void AddDot4x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   }
 }
 
+// 这个版本 inline 了 AddDot
 void MY_MMult_4x4_4( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )

@@ -73,12 +73,15 @@ void AddDot4x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
     a_2p_reg.v = _mm_set_ps1(*a_2p_pntr++);
     a_3p_reg.v = _mm_set_ps1(*a_3p_pntr++);
 
+    // same with _mm_mul_ps
     c_p0_sum.v += b_reg.v * a_0p_reg.v;
     c_p1_sum.v += b_reg.v * a_1p_reg.v;
     c_p2_sum.v += b_reg.v * a_2p_reg.v;
     c_p3_sum.v += b_reg.v * a_3p_reg.v;
   }
-
+  // 由于字节序的问题下面的代码可能要进行如下的修改：
+  // C(0, 0) += c_p0_sum.d[3]; C(0, 1) += c_p0_sum.d[2];
+  // C(0, 2) += c_p0_sum.d[1]; C(0, 3) += c_p0_sum.d[0];
   C(0, 0) += c_p0_sum.d[0]; C(0, 1) += c_p0_sum.d[1];
   C(0, 2) += c_p0_sum.d[2]; C(0, 3) += c_p0_sum.d[3];
 

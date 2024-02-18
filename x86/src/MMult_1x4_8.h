@@ -74,6 +74,7 @@ void AddDot1x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   C( 3, 0 ) += c_03_reg;
 }
 
+// 4 行乘 1 列，将 4 行再分成 4x4 的小矩阵，1 列分成 4x1 的小矩阵
 void MY_MMult_1x4_8( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )

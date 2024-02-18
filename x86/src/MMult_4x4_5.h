@@ -53,6 +53,7 @@ void AddDot4x4( int k, float *a, int lda,  float *b, int ldb, float *c, int ldc 
   }
 }
 
+// 每遍历一次 k，计算 16 次 fma
 void MY_MMult_4x4_5( int m, int n, int k, float *a, int lda,
                                     float *b, int ldb,
                                     float *c, int ldc )
